@@ -1,0 +1,21 @@
+{
+    "background.enabled": true,
+    "background.useDefault": true,
+    "background.customImages": [
+        "/home/yousenna/Pictures/tst1_nature.jpg"
+    ],
+    "background.style": {
+        "content": "''",
+        "pointer-events": "none",
+        "position": "fixed",
+        "top": "0",
+        "left": "0",
+        "width": "100vw",
+        "height": "100vh",
+        "z-index": "99999",
+        "background-size": "cover",
+        "background-position": "center",
+        "background-repeat": "no-repeat",
+        "opacity": 0.1
+    }
+}
