@@ -25,18 +25,10 @@ void initial_dongles(t_progInfo *prog_info)
 int	create_coders(t_progInfo *prog_info)
 {
 	int	i;
-	int	left_d_index;
 
 	i = 0;
 	while (i < prog_info->nb_coders)
 	{
-		left_d_index = (i + prog_info->nb_coders - 1) % prog_info->nb_coders;
-		prog_info->coders[i].coder_id = i + 1;
-		prog_info->coders[i].prog_info = prog_info;
-		prog_info->coders[i].left_dongle = &prog_info->dongles[i];
-		prog_info->coders[i].right_dongle = &prog_info->dongles[left_d_index];
-		prog_info->coders[i].last_compile = get_curr_t();
-		prog_info->coders[i].is_finished = 0;
 		if (pthread_create(&prog_info->coders[i].thread_id,
 			NULL, simulation_routine, &prog_info->coders[i])
 		)
@@ -49,6 +41,26 @@ int	create_coders(t_progInfo *prog_info)
 		i++;
 	}
 	return -1;
+}
+
+
+void	initial_coders(t_progInfo *prog_info)
+{
+	int	i;
+	int	left_d_index;
+
+	i = 0;
+	while (i < prog_info->nb_coders)
+	{
+		left_d_index = (i + prog_info->nb_coders - 1) % prog_info->nb_coders;
+		prog_info->coders[i].coder_id = i + 1;
+		prog_info->coders[i].prog_info = prog_info;
+		prog_info->coders[i].left_dongle = &prog_info->dongles[i];
+		prog_info->coders[i].right_dongle = &prog_info->dongles[left_d_index];
+		prog_info->coders[i].last_compile = get_curr_t();
+		prog_info->coders[i].is_finished = 0;
+		i++;
+	}
 }
 
 void	wake_up_coders(t_progInfo *prog_info)
@@ -121,12 +133,14 @@ int create_resources(t_progInfo *prog_info, pthread_t *monitor)
 	prog_info->is_burnout = 0;
 	prog_info->finished_compile = 0;
 	pthread_mutex_init(&prog_info->prog_mutex, NULL);
+	pthread_cond_init(&prog_info->prog_cond, NULL);
 	if (!prog_info->coders || !prog_info->dongles)
 		return 0;
 	initial_dongles(prog_info);
-	failer_check = create_coders(prog_info);
+	initial_coders(prog_info);
 	if (pthread_create(monitor, NULL, monitor_rotine, prog_info))
 		return (2147483647);
+	failer_check = create_coders(prog_info);
 	if (failer_check != -1)
 	{
 		// her i need to stop all created threads

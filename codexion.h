@@ -57,6 +57,7 @@ typedef struct s_progInfo
 	t_coder					*coders;
 	t_dongle				*dongles;
 	pthread_mutex_t			prog_mutex;
+	pthread_cond_t			prog_cond;
 	long long				start_time;
 	int						nb_coders;
 	int						burnout_time;

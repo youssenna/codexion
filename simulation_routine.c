@@ -1,4 +1,5 @@
 #include "codexion.h"
+#include <pthread.h>
 
 int sleep_coders(t_coder *coder, t_dongle *dongle, long long *last)
 {
@@ -122,8 +123,7 @@ void *simulation_routine(void *arg)
 
 	coder = (t_coder *)arg;
 	i = 0;
-	
-	
+
 	set_dongles_ptr(coder, &d1, &d2);
 	while (i < coder->prog_info->compile_nb)
 	{

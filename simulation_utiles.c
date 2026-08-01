@@ -3,15 +3,12 @@
 #include <stdio.h>
 
 
-int my_sleep(t_coder *coder, unsigned int usec)
+int my_sleep(t_coder *coder, unsigned int ms)
 {
-	int i;
+	long long start_time;
 
-	i = 0;
-	// usleep((usec * 1000) / 2);
-	// usleep((usec * 1000) / 2);
-	// return 1;
-	while (i <= usec)
+	start_time = get_curr_t();
+	while (get_curr_t() - start_time < ms)
 	{
 		pthread_mutex_lock(&coder->prog_info->prog_mutex);
 		if (coder->prog_info->run_sumilation == 0)
@@ -20,11 +17,8 @@ int my_sleep(t_coder *coder, unsigned int usec)
 			return 0;
 		}
 		pthread_mutex_unlock(&coder->prog_info->prog_mutex);
-		usleep(10 * 1000);
-		i += 10;
+		usleep(1000);
 	}
-	i -= 10;
-	usleep((usec - i) * 1000);
 	return 1;
 }
 
@@ -34,28 +28,19 @@ int	compiling(t_coder *coder)
 	coder->last_compile = get_curr_t();
 	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
 	print_coder_mesage(coder, "is compiling");
-	if (!my_sleep(coder, coder->prog_info->compile_time))
-		return 0;
-	return 1;
-	// usleep(coder->prog_info->compile_time * 1000);
+	return (my_sleep(coder, coder->prog_info->compile_time));
 }
 
 int	debuging(t_coder *coder)
 {
 	print_coder_mesage(coder, "is debugging");
-	if (!my_sleep(coder, coder->prog_info->debug_time))
-		return 0;
-	return 1;
-	// usleep(coder->prog_info->debug_time * 1000);
+	return (my_sleep(coder, coder->prog_info->debug_time));
 }
 
 int	refactoring(t_coder *coder)
 {
 	print_coder_mesage(coder, "is refactoring");
-	if (!my_sleep(coder, coder->prog_info->refactor_time))
-		return 0;
-	return 1;
-	// usleep(coder->prog_info->refactor_time * 1000);
+	return (my_sleep(coder, coder->prog_info->refactor_time));
 }
 
 int rotine_and_burnout_check(t_coder *coder, char *job)
@@ -89,13 +74,9 @@ int rotine_and_burnout_check(t_coder *coder, char *job)
 int sumilation(t_coder *coder, t_dongle *d1, t_dongle *d2)
 {
 	if (!take_dongle(coder, d1, "first"))
-	{
-		// burnout_message(coder);
 		return 0;
-	}
 	if (!take_dongle(coder, d2, "second"))
 	{
-		// burnout_message(coder);
 		put_dongle(d1);
 		return 0;
 	}
