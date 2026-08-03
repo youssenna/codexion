@@ -9,8 +9,8 @@ FILES = main.c parser.c simulation_routine.c \
 
 
 all:
-	$(CC) $(CFLAGS) $(FILES) -pthread
-	setarch $(uname -m) -R ./a.out  3 317 100 10 100 2 5 edf 
+	$(CC)  $(FILES) -pthread
+	./a.out  3 317 100 10 100 2 5 edf 
 
 helgrand:
 	$(CC) -g $(FILES) -pthread

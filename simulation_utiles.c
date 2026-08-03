@@ -1,6 +1,7 @@
 #include "codexion.h"
 #include <pthread.h>
 #include <stdio.h>
+#include <unistd.h>
 
 
 int my_sleep(t_coder *coder, unsigned int ms)

@@ -1,5 +1,6 @@
 #include "codexion.h"
 #include <pthread.h>
+#include <unistd.h>
 
 int sleep_coders(t_coder *coder, t_dongle *dongle, long long *last)
 {
