@@ -6,7 +6,7 @@
 /*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 13:09:32 by yousenna          #+#    #+#             */
-/*   Updated: 2026/07/26 13:27:23 by yousenna         ###   ########.fr       */
+/*   Updated: 2026/08/04 20:27:21 by yousenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_progInfo
 	int						run_sumilation;
 	int						is_burnout;
 	int						finished_compile;
+	int						start_sim;
 	char					*scheduler;
 }							t_progInfo;
 

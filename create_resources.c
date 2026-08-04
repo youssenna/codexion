@@ -140,7 +140,12 @@ int create_resources(t_progInfo *prog_info, pthread_t *monitor)
 	initial_coders(prog_info);
 	if (pthread_create(monitor, NULL, monitor_rotine, prog_info))
 		return (2147483647);
+	prog_info->start_sim = 0;
 	failer_check = create_coders(prog_info);
+	pthread_mutex_lock(&prog_info->prog_mutex);
+	prog_info->start_sim = 1;
+	pthread_cond_broadcast(&prog_info->prog_cond);
+	pthread_mutex_unlock(&prog_info->prog_mutex);
 	if (failer_check != -1)
 	{
 		// her i need to stop all created threads
