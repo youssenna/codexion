@@ -129,9 +129,9 @@ void *simulation_routine(void *arg)
 	if (!coder->prog_info->start_sim)
 		pthread_cond_wait(&coder->prog_info->prog_cond, &coder->prog_info->prog_mutex);
 
-	if (coder->coder_id % 2 == 0)
-		usleep(500);
 	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
+	if (coder->coder_id % 2 == 0)
+		usleep(1000);
 	set_dongles_ptr(coder, &d1, &d2);
 	while (i < coder->prog_info->compile_nb)
 	{

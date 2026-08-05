@@ -72,15 +72,111 @@ int rotine_and_burnout_check(t_coder *coder, char *job)
 	return 0;
 }
 
-int sumilation(t_coder *coder, t_dongle *d1, t_dongle *d2)
+
+int take_both_dongles(t_coder *coder, t_dongle *d1, t_dongle *d2)
 {
-	if (!take_dongle(coder, d1, "first"))
-		return 0;
-	if (!take_dongle(coder, d2, "second"))
+	long long last1;
+	long long last2;
+
+	
+	pthread_mutex_lock(&d1->mutex);
+	if (d1->dongle_id == d2->dongle_id)
 	{
-		put_dongle(d1);
+		d1->is_hold = 1;
+		printf("[%lld] coder [%d] has take first dongle [%d]\n",
+				get_curr_t() - coder->prog_info->start_time,
+				coder->coder_id, d1->dongle_id);
+		pthread_mutex_unlock(&d1->mutex);
+		pthread_cond_wait(&d1->cond, &d1->mutex);
 		return 0;
 	}
+	pthread_mutex_lock(&d2->mutex);
+	request_dongle(coder, d1);
+	request_dongle(coder, d2);
+	if (!d1->is_first_usage)
+		last1 = get_curr_t() - d1->last_usage;
+	else
+		last1 = coder->prog_info->dongle_cooldown;
+
+	if (!d2->is_first_usage)
+		last2 = get_curr_t() - d2->last_usage;
+	else
+		last2 = coder->prog_info->dongle_cooldown;
+	
+	while (d1->is_hold || last1 < coder->prog_info->dongle_cooldown
+		   || d1->queue[0].coder_id != coder->coder_id)
+	{
+		pthread_mutex_unlock(&d2->mutex);
+		if (!sleep_coders(coder, d1, &last1))
+		{
+			pthread_mutex_unlock(&d1->mutex);
+			return 0;
+		}
+		pthread_mutex_lock(&d2->mutex);
+	}
+	d1->is_hold = 1;
+	d1->queue[0] = d1->queue[1];
+	(d1->queue_len)--;
+	printf("[%lld] coder [%d] has take first dongle [%d]\n",
+		get_curr_t() - coder->prog_info->start_time,
+		coder->coder_id, d1->dongle_id);
+
+	pthread_mutex_lock(&coder->prog_info->prog_mutex);
+	if (!coder->prog_info->run_sumilation)
+	{
+		pthread_mutex_unlock(&coder->prog_info->prog_mutex);
+		pthread_mutex_unlock(&d1->mutex);
+		pthread_mutex_unlock(&d2->mutex);
+		return 0;
+	}
+	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
+
+	while (d2->is_hold || last2 < coder->prog_info->dongle_cooldown
+		   || d2->queue[0].coder_id != coder->coder_id)
+	{
+		if (!sleep_coders(coder, d2, &last2))
+		{
+			d1->is_hold = 0;
+			pthread_mutex_unlock(&d1->mutex);
+			pthread_mutex_unlock(&d2->mutex );
+			return 0;
+		}
+	}
+	d2->is_hold = 1;
+	d2->queue[0] = d2->queue[1];
+	(d2->queue_len)--;
+
+
+	pthread_mutex_lock(&coder->prog_info->prog_mutex);
+	if (!coder->prog_info->run_sumilation)
+	{
+		pthread_mutex_unlock(&coder->prog_info->prog_mutex);
+		pthread_mutex_unlock(&d1->mutex);
+		pthread_mutex_unlock(&d2->mutex);
+		return 0;
+	}
+	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
+
+
+	printf("[%lld] coder [%d] has take secand dongle [%d]\n",
+		get_curr_t() - coder->prog_info->start_time,
+		coder->coder_id, d2->dongle_id);
+	pthread_mutex_unlock(&d1->mutex);
+	pthread_mutex_unlock(&d2->mutex);
+	return 1;
+}
+
+
+
+int sumilation(t_coder *coder, t_dongle *d1, t_dongle *d2)
+{
+	if (!take_both_dongles(coder, d1, d2))
+		return 0;
+	// if (!take_dongle(coder, d2, "second"))
+	// {
+	// 	put_dongle(d1);
+	// 	return 0;
+	// }
 	if (rotine_and_burnout_check(coder, "compile"))
 		return 0;
 	put_dongle(d1);

@@ -6,7 +6,7 @@
 /*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 13:09:32 by yousenna          #+#    #+#             */
-/*   Updated: 2026/08/04 20:27:21 by yousenna         ###   ########.fr       */
+/*   Updated: 2026/08/05 16:20:19 by yousenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ int	debuging(t_coder *coder);
 int	refactoring(t_coder *coder);
 int sumilation(t_coder *coder, t_dongle *d1, t_dongle *d2);
 int take_dongle(t_coder *coder, t_dongle *dongle, char *s);
+void request_dongle(t_coder *coder, t_dongle *dongle);
 void put_dongle(t_dongle *dongle);
+int sleep_coders(t_coder *coder, t_dongle *dongle, long long *last);
 int rotine_and_burnout_check(t_coder *coder, char *job);
 
 #endif
