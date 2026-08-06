@@ -1,0 +1,250 @@
+[1] coder [1] has take first dongle [1]
+[1] coder [1] has take first dongle [5]
+[1] coder [1] is compiling
+[1] coder [3] has take first dongle [2]
+[1] coder [3] has take first dongle [3]
+[1] coder [3] is compiling
+[201] coder [1] is debugging
+[202] coder [3] is debugging
+[402] coder [1] is refactoring
+[402] coder [3] is refactoring
+[1001] coder [5] has take first dongle [4]
+[1001] coder [5] has take first dongle [5]
+[1001] coder [5] is compiling
+[1002] coder [2] has take first dongle [1]
+[1002] coder [2] has take first dongle [2]
+[1002] coder [2] is compiling
+[1201] coder [5] is debugging
+[1202] coder [2] is debugging
+[1401] coder [5] is refactoring
+[1402] coder [2] is refactoring
+[2001] coder [4] has take first dongle [3]
+[2001] coder [4] has take first dongle [4]
+[2001] coder [4] is compiling
+[2002] coder [1] has take first dongle [1]
+[2002] coder [1] has take first dongle [5]
+[2002] coder [1] is compiling
+[2201] coder [4] is debugging
+[2202] coder [1] is debugging
+[2401] coder [4] is refactoring
+[2402] coder [1] is refactoring
+[3001] coder [3] has take first dongle [2]
+[3001] coder [3] has take first dongle [3]
+[3001] coder [3] is compiling
+[3002] coder [5] has take first dongle [4]
+[3002] coder [5] has take first dongle [5]
+[3002] coder [5] is compiling
+[3201] coder [3] is debugging
+[3202] coder [5] is debugging
+[3401] coder [3] is refactoring
+[3402] coder [5] is refactoring
+[4001] coder [2] has take first dongle [1]
+[4001] coder [2] has take first dongle [2]
+[4001] coder [2] is compiling
+[4002] coder [4] has take first dongle [3]
+[4002] coder [4] has take first dongle [4]
+[4002] coder [4] is compiling
+[4201] coder [2] is debugging
+[4202] coder [4] is debugging
+[4401] coder [2] is refactoring
+[4402] coder [4] is refactoring
+[5001] coder [1] has take first dongle [1]
+[5001] coder [1] has take first dongle [5]
+[5001] coder [1] is compiling
+[5002] coder [3] has take first dongle [2]
+[5002] coder [3] has take first dongle [3]
+[5002] coder [3] is compiling
+[5201] coder [1] is debugging
+[5203] coder [3] is debugging
+[5401] coder [1] is refactoring
+[5403] coder [3] is refactoring
+[6001] coder [5] has take first dongle [4]
+[6001] coder [5] has take first dongle [5]
+[6001] coder [5] is compiling
+[6003] coder [2] has take first dongle [1]
+[6003] coder [2] has take first dongle [2]
+[6003] coder [2] is compiling
+[6201] coder [5] is debugging
+[6203] coder [2] is debugging
+[6401] coder [5] is refactoring
+[6404] coder [2] is refactoring
+[7001] coder [4] has take first dongle [3]
+[7001] coder [4] has take first dongle [4]
+[7001] coder [4] is compiling
+[7003] coder [1] has take first dongle [1]
+[7003] coder [1] has take first dongle [5]
+[7003] coder [1] is compiling
+[7201] coder [4] is debugging
+[7203] coder [1] is debugging
+[7401] coder [4] is refactoring
+[7403] coder [1] is refactoring
+[8001] coder [3] has take first dongle [2]
+[8001] coder [3] has take first dongle [3]
+[8001] coder [3] is compiling
+[8003] coder [5] has take first dongle [4]
+[8003] coder [5] has take first dongle [5]
+[8003] coder [5] is compiling
+[8201] coder [3] is debugging
+[8203] coder [5] is debugging
+[8401] coder [3] is refactoring
+[8403] coder [5] is refactoring
+[9001] coder [2] has take first dongle [1]
+[9001] coder [2] has take first dongle [2]
+[9001] coder [2] is compiling
+[9003] coder [4] has take first dongle [3]
+[9003] coder [4] has take first dongle [4]
+[9003] coder [4] is compiling
+[9201] coder [2] is debugging
+[9203] coder [4] is debugging
+[9401] coder [2] is refactoring
+[9403] coder [4] is refactoring
+[10001] coder [1] has take first dongle [1]
+[10001] coder [1] has take first dongle [5]
+[10001] coder [1] is compiling
+[10003] coder [3] has take first dongle [2]
+[10003] coder [3] has take first dongle [3]
+[10003] coder [3] is compiling
+[10201] coder [1] is debugging
+[10203] coder [3] is debugging
+[10401] coder [1] is refactoring
+[10403] coder [3] is refactoring
+[11001] coder [5] has take first dongle [4]
+[11001] coder [5] has take first dongle [5]
+[11001] coder [5] is compiling
+[11003] coder [2] has take first dongle [1]
+[11003] coder [2] has take first dongle [2]
+[11003] coder [2] is compiling
+[11201] coder [5] is debugging
+[11203] coder [2] is debugging
+[11401] coder [5] is refactoring
+[11403] coder [2] is refactoring
+[12001] coder [4] has take first dongle [3]
+[12001] coder [4] has take first dongle [4]
+[12001] coder [4] is compiling
+[12003] coder [1] has take first dongle [1]
+[12003] coder [1] has take first dongle [5]
+[12003] coder [1] is compiling
+[12201] coder [4] is debugging
+[12203] coder [1] is debugging
+[12401] coder [4] is refactoring
+[12403] coder [1] is refactoring
+[13001] coder [3] has take first dongle [2]
+[13001] coder [3] has take first dongle [3]
+[13001] coder [3] is compiling
+[13003] coder [5] has take first dongle [4]
+[13003] coder [5] has take first dongle [5]
+[13003] coder [5] is compiling
+[13201] coder [3] is debugging
+[13203] coder [5] is debugging
+[13401] coder [3] is refactoring
+[13403] coder [5] is refactoring
+[14001] coder [2] has take first dongle [1]
+[14001] coder [2] has take first dongle [2]
+[14001] coder [2] is compiling
+[14003] coder [4] has take first dongle [3]
+[14003] coder [4] has take first dongle [4]
+[14003] coder [4] is compiling
+[14201] coder [2] is debugging
+[14203] coder [4] is debugging
+[14401] coder [2] is refactoring
+[14403] coder [4] is refactoring
+[15001] coder [1] has take first dongle [1]
+[15001] coder [1] has take first dongle [5]
+[15001] coder [1] is compiling
+[15003] coder [3] has take first dongle [2]
+[15003] coder [3] has take first dongle [3]
+[15003] coder [3] is compiling
+[15201] coder [1] is debugging
+[15203] coder [3] is debugging
+[15401] coder [1] is refactoring
+[15403] coder [3] is refactoring
+[16001] coder [5] has take first dongle [4]
+[16001] coder [5] has take first dongle [5]
+[16001] coder [5] is compiling
+[16003] coder [2] has take first dongle [1]
+[16003] coder [2] has take first dongle [2]
+[16003] coder [2] is compiling
+[16201] coder [5] is debugging
+[16203] coder [2] is debugging
+[16401] coder [5] is refactoring
+[16403] coder [2] is refactoring
+[17001] coder [4] has take first dongle [3]
+[17001] coder [4] has take first dongle [4]
+[17001] coder [4] is compiling
+[17003] coder [1] has take first dongle [1]
+[17003] coder [1] has take first dongle [5]
+[17003] coder [1] is compiling
+[17201] coder [4] is debugging
+[17203] coder [1] is debugging
+[17401] coder [4] is refactoring
+[17403] coder [1] is refactoring
+[18001] coder [3] has take first dongle [2]
+[18001] coder [3] has take first dongle [3]
+[18001] coder [3] is compiling
+[18003] coder [5] has take first dongle [4]
+[18003] coder [5] has take first dongle [5]
+[18003] coder [5] is compiling
+[18201] coder [3] is debugging
+[18203] coder [5] is debugging
+[18401] coder [3] is refactoring
+[18403] coder [5] is refactoring
+[19001] coder [2] has take first dongle [1]
+[19001] coder [2] has take first dongle [2]
+[19001] coder [2] is compiling
+[19003] coder [4] has take first dongle [3]
+[19003] coder [4] has take first dongle [4]
+[19003] coder [4] is compiling
+[19201] coder [2] is debugging
+[19203] coder [4] is debugging
+[19401] coder [2] is refactoring
+[19403] coder [4] is refactoring
+[20001] coder [1] has take first dongle [1]
+[20001] coder [1] has take first dongle [5]
+[20001] coder [1] is compiling
+[20003] coder [3] has take first dongle [2]
+[20003] coder [3] has take first dongle [3]
+[20003] coder [3] is compiling
+[20201] coder [1] is debugging
+[20203] coder [3] is debugging
+[20401] coder [1] is refactoring
+[20403] coder [3] is refactoring
+[21001] coder [5] has take first dongle [4]
+[21001] coder [5] has take first dongle [5]
+[21001] coder [5] is compiling
+[21003] coder [2] has take first dongle [1]
+[21003] coder [2] has take first dongle [2]
+[21003] coder [2] is compiling
+[21201] coder [5] is debugging
+[21204] coder [2] is debugging
+[21401] coder [5] is refactoring
+[21404] coder [2] is refactoring
+[22001] coder [4] has take first dongle [3]
+[22001] coder [4] has take first dongle [4]
+[22001] coder [4] is compiling
+[22004] coder [1] has take first dongle [1]
+[22004] coder [1] has take first dongle [5]
+[22004] coder [1] is compiling
+[22201] coder [4] is debugging
+[22205] coder [1] is debugging
+[22401] coder [4] is refactoring
+[22405] coder [1] is refactoring
+[23001] coder [3] has take first dongle [2]
+[23001] coder [3] has take first dongle [3]
+[23001] coder [3] is compiling
+[23005] coder [5] has take first dongle [4]
+[23005] coder [5] has take first dongle [5]
+[23005] coder [5] is compiling
+[23201] coder [3] is debugging
+[23205] coder [5] is debugging
+[23401] coder [3] is refactoring
+[23405] coder [5] is refactoring
+[24001] coder [2] has take first dongle [1]
+[24001] coder [2] has take first dongle [2]
+[24001] coder [2] is compiling
+[24005] coder [4] has take first dongle [3]
+[24005] coder [4] has take first dongle [4]
+[24005] coder [4] is compiling
+[24201] coder [2] is debugging
+[24205] coder [4] is debugging
+[24401] coder [2] is refactoring
+[24405] coder [4] is refactoring
