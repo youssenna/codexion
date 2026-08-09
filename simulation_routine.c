@@ -12,19 +12,23 @@
 
 #include "codexion.h"
 
+static int	is_sim_running(t_coder *coder)
+{
+	int	running;
+
+	pthread_mutex_lock(&coder->prog_info->prog_mutex);
+	running = coder->prog_info->run_sumilation;
+	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
+	return (running);
+}
+
 int	sleep_coders(t_coder *coder, t_dongle *dongle, long long *last)
 {
 	struct timespec	deadline;
 	long long		target_time;
 
-	pthread_mutex_lock(&coder->prog_info->prog_mutex);
-	if (!coder->prog_info->run_sumilation)
-	{
-		pthread_cond_broadcast(&dongle->cond);
-		pthread_mutex_unlock(&coder->prog_info->prog_mutex);
+	if (!is_sim_running(coder))
 		return (0);
-	}
-	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
 	if (dongle->is_hold || dongle->queue[0].coder_id != coder->coder_id)
 		pthread_cond_wait(&dongle->cond, &dongle->mutex);
 	else
@@ -34,6 +38,8 @@ int	sleep_coders(t_coder *coder, t_dongle *dongle, long long *last)
 		deadline.tv_nsec = (target_time % 1000) * 1000000;
 		pthread_cond_timedwait(&dongle->cond, &dongle->mutex, &deadline);
 	}
+	if (!is_sim_running(coder))
+		return (0);
 	*last = get_curr_t() - dongle->last_usage;
 	return (1);
 }
@@ -77,24 +83,12 @@ void	set_dongles_ptr(t_coder *coder, t_dongle **d1, t_dongle **d2)
 	}
 }
 
-static void	run_coders_loop(t_coder *coder, t_dongle *d1, t_dongle *d2)
-{
-	int	i;
-
-	i = 0;
-	while (i < coder->prog_info->compile_nb)
-	{
-		if (!sumilation(coder, d1, d2))
-			return ;
-		i++;
-	}
-}
-
 void	*simulation_routine(void *arg)
 {
 	t_coder		*coder;
 	t_dongle	*d1;
 	t_dongle	*d2;
+	int			i;
 
 	coder = (t_coder *)arg;
 	pthread_mutex_lock(&coder->prog_info->prog_mutex);
@@ -105,10 +99,12 @@ void	*simulation_routine(void *arg)
 	if (coder->coder_id % 2 == 0)
 		usleep(1000);
 	set_dongles_ptr(coder, &d1, &d2);
-	run_coders_loop(coder, d1, d2);
-	pthread_mutex_lock(&coder->prog_info->prog_mutex);
-	coder->is_finished = 1;
-	coder->prog_info->finished_compile++;
-	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
+	i = 0;
+	while (i < coder->prog_info->compile_nb)
+	{
+		if (!sumilation(coder, d1, d2))
+			return (NULL);
+		i++;
+	}
 	return (NULL);
 }
