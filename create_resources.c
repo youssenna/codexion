@@ -1,7 +1,18 @@
-#include "codexion.h"
-#include <pthread.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_resources.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/18 13:07:00 by yousenna          #+#    #+#             */
+/*   Updated: 2026/08/09 17:00:00 by yousenna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void initial_dongles(t_progInfo *prog_info)
+#include "codexion.h"
+
+static void	initial_dongles(t_prog_info *prog_info)
 {
 	int	i;
 
@@ -20,31 +31,7 @@ void initial_dongles(t_progInfo *prog_info)
 	}
 }
 
-// return -1 if all threads created successfully
-// else it return index of failer thread
-int	create_coders(t_progInfo *prog_info)
-{
-	int	i;
-
-	i = 0;
-	while (i < prog_info->nb_coders)
-	{
-		if (pthread_create(&prog_info->coders[i].thread_id,
-			NULL, simulation_routine, &prog_info->coders[i])
-		)
-		{
-			fprintf(stderr,
-				"System Error: Thread[%d] does not created successfully\n",
-				i + 1);
-			return i;
-		}
-		i++;
-	}
-	return -1;
-}
-
-
-void	initial_coders(t_progInfo *prog_info)
+static void	initial_coders(t_prog_info *prog_info)
 {
 	int	i;
 	int	left_d_index;
@@ -63,69 +50,45 @@ void	initial_coders(t_progInfo *prog_info)
 	}
 }
 
-void	wake_up_coders(t_progInfo *prog_info)
+static int	create_coders(t_prog_info *prog_info)
 {
-    int i = 0;
-    while (i < prog_info->nb_coders)
-    {
-        pthread_mutex_lock(&prog_info->dongles[i].mutex);
-        pthread_cond_broadcast(&prog_info->dongles[i].cond);
-        pthread_mutex_unlock(&prog_info->dongles[i].mutex);
-        i++;
-    }
+	int	i;
+
+	i = 0;
+	while (i < prog_info->nb_coders)
+	{
+		if (pthread_create(&prog_info->coders[i].thread_id,
+				NULL, simulation_routine, &prog_info->coders[i]))
+		{
+			fprintf(stderr,
+				"System Error: Thread[%d] does not created successfully\n",
+				i + 1);
+			return (i);
+		}
+		i++;
+	}
+	return (-1);
 }
 
-void *monitor_rotine(void *arg)
+static int	start_sim_routine(t_prog_info *prog_info, int failer_check)
 {
-	t_progInfo	*prog_info;
-	int			i;
-	long long 	is_burnout;
-
-	prog_info = (t_progInfo *)arg;
-	while (1)
+	pthread_mutex_lock(&prog_info->prog_mutex);
+	prog_info->start_sim = 1;
+	pthread_cond_broadcast(&prog_info->prog_cond);
+	pthread_mutex_unlock(&prog_info->prog_mutex);
+	if (failer_check != -1)
 	{
 		pthread_mutex_lock(&prog_info->prog_mutex);
-		if (prog_info->finished_compile == prog_info->nb_coders)
-		{
-			pthread_mutex_unlock(&prog_info->prog_mutex);
-			return NULL;
-		}
+		prog_info->run_sumilation = 0;
 		pthread_mutex_unlock(&prog_info->prog_mutex);
-		
-		i = 0;
-		while (i < prog_info->nb_coders)
-		{
-			// printf("[%lld] moter check coder [%d]\n", get_curr_t() - prog_info->start_time, i);
-			pthread_mutex_lock(&prog_info->prog_mutex);
-			if (prog_info->coders[i].is_finished)
-			{
-				pthread_mutex_unlock(&prog_info->prog_mutex);
-				i++;
-				continue;
-			}
-			is_burnout = get_curr_t() - prog_info->coders[i].last_compile;
-			pthread_mutex_unlock(&prog_info->prog_mutex);
-			if (is_burnout >= prog_info->burnout_time)
-			{
-				pthread_mutex_lock(&prog_info->prog_mutex);
-				prog_info->run_sumilation = 0;
-				pthread_mutex_unlock(&prog_info->prog_mutex);
-				wake_up_coders(prog_info);
-				burnout_message(&prog_info->coders[i]);
-				return NULL;
-			}
-			i++;
-		}
-		usleep(500);
+		return (failer_check);
 	}
-	prog_info = (t_progInfo *)arg;
-	return NULL;
+	return (-1);
 }
 
-int create_resources(t_progInfo *prog_info, pthread_t *monitor)
+int	create_resources(t_prog_info *prog_info, pthread_t *monitor)
 {
-	int failer_check;
-	int i;
+	int	failer_check;
 
 	prog_info->coders = malloc(sizeof(t_coder) * prog_info->nb_coders);
 	prog_info->dongles = malloc(sizeof(t_dongle) * prog_info->nb_coders);
@@ -135,24 +98,12 @@ int create_resources(t_progInfo *prog_info, pthread_t *monitor)
 	pthread_mutex_init(&prog_info->prog_mutex, NULL);
 	pthread_cond_init(&prog_info->prog_cond, NULL);
 	if (!prog_info->coders || !prog_info->dongles)
-		return 0;
+		return (0);
 	initial_dongles(prog_info);
 	initial_coders(prog_info);
 	if (pthread_create(monitor, NULL, monitor_rotine, prog_info))
 		return (2147483647);
 	prog_info->start_sim = 0;
 	failer_check = create_coders(prog_info);
-	pthread_mutex_lock(&prog_info->prog_mutex);
-	prog_info->start_sim = 1;
-	pthread_cond_broadcast(&prog_info->prog_cond);
-	pthread_mutex_unlock(&prog_info->prog_mutex);
-	if (failer_check != -1)
-	{
-		// her i need to stop all created threads
-		pthread_mutex_lock(&prog_info->prog_mutex);
-		prog_info->run_sumilation = 0;
-		pthread_mutex_unlock(&prog_info->prog_mutex);
-		return failer_check;
-	}
-	return -1;
+	return (start_sim_routine(prog_info, failer_check));
 }

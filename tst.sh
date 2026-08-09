@@ -4,7 +4,7 @@ EXPECTED=$((200 * 60))
 
 echo "Running..."
 
-OUT=$(setarch $(uname -m) -R ./a.out 200 2000 20 20 20 60 200 fifo)
+OUT=$(setarch $(uname -m) -R ./codexion 200 2000 20 20 20 60 200 fifo)
 
 COMPILE=$(echo "$OUT" | grep -c "is compiling")
 DEBUG=$(echo "$OUT" | grep -c "is debugging")

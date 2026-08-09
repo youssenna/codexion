@@ -1,20 +1,25 @@
 CC = cc
-CFLAGS = -fsanitize=thread -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
 
 NAME = codexion
 
+FILES = main.c parser.c simulation_routine.c create_resources.c \
+		simulation_utiles.c codexion_utiles.c monitor.c dongle_utiles.c \
+		dongle_take.c
 
-FILES = main.c parser.c simulation_routine.c \
-		create_resources.c simulation_utiles.c codexion_utiles.c
+OBJS = $(FILES:.c=.o)
 
+all: $(NAME)
 
-all:
-	$(CC)  $(FILES) -pthread -o $(NAME)
-	./$(NAME)  3 317 100 10 100 2 5 edf 
-
-helgrand:
-	$(CC) -g $(FILES) -pthread
-	setarch $(uname -m) -R valgrind --tool=helgrind ./a.out 30 9150 90 60 60 5 600 fifo
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -pthread -o $(NAME)
 
 clean:
-	rm a.out *.o
+	rm -f $(OBJS) a.out
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

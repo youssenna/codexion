@@ -1,22 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   codexion_utiles.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/18 13:07:00 by yousenna          #+#    #+#             */
+/*   Updated: 2026/08/09 17:00:00 by yousenna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
 
-// this function return the current time in ms
-long long get_curr_t()
+long long	get_curr_t(void)
 {
-	struct timeval tv;
-	long long time_in_ms;
+	struct timeval	tv;
+	long long		time_in_ms;
 
 	gettimeofday(&tv, NULL);
-
 	time_in_ms = ((long long)tv.tv_sec * 1000) + tv.tv_usec / 1000;
-
-	return time_in_ms;
+	return (time_in_ms);
 }
 
-
-void print_coder_mesage(t_coder *coder, char *status)
+void	print_coder_mesage(t_coder *coder, char *status)
 {
-	long long time;
+	long long	time;
 
 	pthread_mutex_lock(&coder->prog_info->prog_mutex);
 	time = get_curr_t() - coder->prog_info->start_time;
@@ -25,9 +33,9 @@ void print_coder_mesage(t_coder *coder, char *status)
 	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
 }
 
-void burnout_message(t_coder *coder)
+void	burnout_message(t_coder *coder)
 {
-	long long time;
+	long long	time;
 
 	pthread_mutex_lock(&coder->prog_info->prog_mutex);
 	time = get_curr_t() - coder->prog_info->start_time;
