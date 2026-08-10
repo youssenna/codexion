@@ -6,7 +6,7 @@
 /*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/09 17:00:00 by yousenna          #+#    #+#             */
-/*   Updated: 2026/08/09 17:00:00 by yousenna         ###   ########.fr       */
+/*   Updated: 2026/08/10 02:41:58 by yousenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,20 @@ void	wake_up_coders(t_prog_info *prog_info)
 
 static int	check_all_finished(t_prog_info *prog_info)
 {
-	int	finished;
+	int	finish;
+	int	i;
 
 	pthread_mutex_lock(&prog_info->prog_mutex);
-	finished = (prog_info->finished_compile == prog_info->nb_coders);
+	i = 0;
+	finish = 1;
+	while (i < prog_info->nb_coders)
+	{
+		if (prog_info->coders[i].finished_compile < prog_info->compile_nb)
+			finish = 0;
+		i++;
+	}
 	pthread_mutex_unlock(&prog_info->prog_mutex);
-	return (finished);
+	return (finish);
 }
 
 static int	check_coder_burnout(t_prog_info *prog_info, int i)

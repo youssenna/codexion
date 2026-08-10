@@ -6,7 +6,7 @@
 /*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 13:07:00 by yousenna          #+#    #+#             */
-/*   Updated: 2026/08/09 17:00:00 by yousenna         ###   ########.fr       */
+/*   Updated: 2026/08/10 01:37:20 by yousenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	initial_coders(t_prog_info *prog_info)
 		prog_info->coders[i].left_dongle = &prog_info->dongles[i];
 		prog_info->coders[i].right_dongle = &prog_info->dongles[left_d_index];
 		prog_info->coders[i].last_compile = get_curr_t();
+		prog_info->coders[i].finished_compile = 0;
 		prog_info->coders[i].is_finished = 0;
 		i++;
 	}

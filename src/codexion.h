@@ -6,7 +6,7 @@
 /*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 13:09:32 by yousenna          #+#    #+#             */
-/*   Updated: 2026/08/09 17:00:00 by yousenna         ###   ########.fr       */
+/*   Updated: 2026/08/10 02:41:20 by yousenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_coder
 	long long	last_compile;
 	int			is_finished;
 	int			coder_id;
+	int			finished_compile;
 }				t_coder;
 
 typedef struct s_prog_info
@@ -72,26 +73,31 @@ typedef struct s_prog_info
 	char			*scheduler;
 }					t_prog_info;
 
-int			create_resources(t_prog_info *prog_info, pthread_t *monitor);
-void		*monitor_rotine(void *arg);
-void		wake_up_coders(t_prog_info *prog_info);
-long long	get_curr_t(void);
 int			parse_arguments(int ac, char **av, t_prog_info *t_args);
-void		*simulation_routine(void *arg);
-void		burnout_message(t_coder *coder);
+
+long long	get_curr_t(void);
 void		print_coder_mesage(t_coder *coder, char *status);
-int			compiling(t_coder *coder);
-int			sumilation(t_coder *coder, t_dongle *d1, t_dongle *d2);
+void		burnout_message(t_coder *coder);
+
+int			create_resources(t_prog_info *prog_info, pthread_t *monitor);
+
+int			is_ready(t_coder *coder, t_dongle *d, long long last);
 int			take_both_dongles(t_coder *coder, t_dongle *d1, t_dongle *d2);
-void		request_dongle(t_coder *coder, t_dongle *dongle);
+
 void		request_dongles(t_coder *coder, t_dongle *d1, t_dongle *d2);
 void		get_last_times(t_coder *c, t_dongle *d1, t_dongle *d2,
 				long long *l);
 int			acquire_both(t_coder *coder, t_dongle *d1, t_dongle *d2);
-int			is_ready(t_coder *coder, t_dongle *d, long long last);
 void		put_dongle(t_dongle *dongle);
+
+void		wake_up_coders(t_prog_info *prog_info);
+void		*monitor_rotine(void *arg);
+
 int			sleep_coders(t_coder *coder, t_dongle *dongle, long long *last);
-int			rotine_and_burnout_check(t_coder *coder, char *job);
-void		set_dongles_ptr(t_coder *coder, t_dongle **d1, t_dongle **d2);
+void		request_dongle(t_coder *coder, t_dongle *dongle);
+
+void		*simulation_routine(void *arg);
+
+int			sumilation(t_coder *coder, t_dongle *d1, t_dongle *d2);
 
 #endif

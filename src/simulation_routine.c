@@ -6,7 +6,7 @@
 /*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 13:07:00 by yousenna          #+#    #+#             */
-/*   Updated: 2026/08/09 17:00:00 by yousenna         ###   ########.fr       */
+/*   Updated: 2026/08/10 02:37:49 by yousenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	*simulation_routine(void *arg)
 	if (!coder->prog_info->start_sim)
 		pthread_cond_wait(&coder->prog_info->prog_cond,
 			&coder->prog_info->prog_mutex);
+	coder->last_compile = get_curr_t();
 	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
 	if (coder->coder_id % 2 == 0)
 		usleep(1000);

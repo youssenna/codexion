@@ -6,7 +6,7 @@
 /*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 13:07:00 by yousenna          #+#    #+#             */
-/*   Updated: 2026/08/09 17:00:00 by yousenna         ###   ########.fr       */
+/*   Updated: 2026/08/10 02:42:28 by yousenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	action_sleep(t_coder *coder, char *msg, int time)
 	return (my_sleep(coder, time));
 }
 
-int	compiling(t_coder *coder)
+static int	compiling(t_coder *coder)
 {
 	pthread_mutex_lock(&coder->prog_info->prog_mutex);
 	coder->last_compile = get_curr_t();
@@ -46,7 +46,7 @@ int	compiling(t_coder *coder)
 			coder->prog_info->compile_time));
 }
 
-int	rotine_and_burnout_check(t_coder *coder, char *job)
+static int	rotine_and_burnout_check(t_coder *coder, char *job)
 {
 	pthread_mutex_lock(&coder->prog_info->prog_mutex);
 	if (!coder->prog_info->run_sumilation)
@@ -77,5 +77,10 @@ int	sumilation(t_coder *coder, t_dongle *d1, t_dongle *d2)
 	if (rotine_and_burnout_check(coder, "debug")
 		|| rotine_and_burnout_check(coder, "refactor"))
 		return (0);
+	pthread_mutex_lock(&coder->prog_info->prog_mutex);
+	coder->finished_compile++;
+	if (coder->finished_compile == coder->prog_info->compile_nb)
+		coder->is_finished = 1;
+	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
 	return (1);
 }

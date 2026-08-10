@@ -1,11 +1,11 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 NAME = codexion
 
-FILES = main.c parser.c simulation_routine.c create_resources.c \
-		simulation_utiles.c codexion_utiles.c monitor.c dongle_utiles.c \
-		dongle_take.c
+FILES = src/main.c src/parser.c src/simulation_routine.c src/create_resources.c \
+		src/simulation_utiles.c src/codexion_utiles.c src/monitor.c src/dongle_utiles.c \
+		src/dongle_take.c
 
 OBJS = $(FILES:.c=.o)
 
@@ -23,3 +23,6 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+
+.SECONDARY:

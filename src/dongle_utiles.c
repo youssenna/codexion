@@ -6,7 +6,7 @@
 /*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/09 17:00:00 by yousenna          #+#    #+#             */
-/*   Updated: 2026/08/09 17:00:00 by yousenna         ###   ########.fr       */
+/*   Updated: 2026/08/10 03:04:21 by yousenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,8 @@ int	acquire_both(t_coder *coder, t_dongle *d1, t_dongle *d2)
 	(d1->queue_len)--;
 	d2->queue[0] = d2->queue[1];
 	(d2->queue_len)--;
-	printf("[%lld] coder [%d] has take first dongle [%d]\n",
-		get_curr_t() - coder->prog_info->start_time,
-		coder->coder_id, d1->dongle_id);
-	printf("[%lld] coder [%d] has take secand dongle [%d]\n",
-		get_curr_t() - coder->prog_info->start_time,
-		coder->coder_id, d2->dongle_id);
+	print_coder_mesage(coder, "has taken a dongle");
+	print_coder_mesage(coder, "has taken a dongle");
 	pthread_mutex_unlock(&d2->mutex);
 	pthread_mutex_unlock(&d1->mutex);
 	return (1);

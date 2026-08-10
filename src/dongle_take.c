@@ -6,7 +6,7 @@
 /*   By: yousenna <yousenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/09 17:00:00 by yousenna          #+#    #+#             */
-/*   Updated: 2026/08/09 17:00:00 by yousenna         ###   ########.fr       */
+/*   Updated: 2026/08/10 03:03:45 by yousenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,14 @@ static int	sleep_on_target(t_coder *coder, t_dongle *d1, t_dongle *d2,
 
 int	take_both_dongles(t_coder *coder, t_dongle *d1, t_dongle *d2)
 {
-	long long	l[2];
-	int			r[2];
+	long long	last[2];
+	int			ready[2];
 
 	if (d1->dongle_id == d2->dongle_id)
+	{
+		print_coder_mesage(coder, "has taken a dongle");
 		return (0);
+	}
 	pthread_mutex_lock(&d1->mutex);
 	pthread_mutex_lock(&d2->mutex);
 	request_dongles(coder, d1, d2);
@@ -65,14 +68,14 @@ int	take_both_dongles(t_coder *coder, t_dongle *d1, t_dongle *d2)
 	{
 		if (check_sim_stop(coder, d1, d2))
 			return (0);
-		get_last_times(coder, d1, d2, l);
-		r[0] = is_ready(coder, d1, l[0]);
-		r[1] = is_ready(coder, d2, l[1]);
-		if (r[0] && r[1])
+		get_last_times(coder, d1, d2, last);
+		ready[0] = is_ready(coder, d1, last[0]);
+		ready[1] = is_ready(coder, d2, last[1]);
+		if (ready[0] && ready[1])
 			return (acquire_both(coder, d1, d2));
-		if (!r[0] && !sleep_on_target(coder, d1, d2, d1))
+		if (!ready[0] && !sleep_on_target(coder, d1, d2, d1))
 			return (0);
-		else if (r[0] && !r[1] && !sleep_on_target(coder, d1, d2, d2))
+		else if (ready[0] && !ready[1] && !sleep_on_target(coder, d1, d2, d2))
 			return (0);
 	}
 }
