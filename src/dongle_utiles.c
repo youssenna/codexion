@@ -44,8 +44,8 @@ int	acquire_both(t_coder *coder, t_dongle *d1, t_dongle *d2)
 	(d1->queue_len)--;
 	d2->queue[0] = d2->queue[1];
 	(d2->queue_len)--;
-	print_coder_mesage(coder, "has taken a dongle");
-	print_coder_mesage(coder, "has taken a dongle");
+	print_coder_mesage(coder, "has taken a first dongle");
+	print_coder_mesage(coder, "has taken a second dongle");
 	pthread_mutex_unlock(&d2->mutex);
 	pthread_mutex_unlock(&d1->mutex);
 	return (1);

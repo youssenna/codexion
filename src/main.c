@@ -116,8 +116,6 @@ int	main(int ac, char *av[])
 		return (1);
 	}
 	prog_info.start_time = get_curr_t();
-	prog_info.coders = NULL;
-	prog_info.dongles = NULL;
 	if (!error_handling(&prog_info))
 		return (0);
 	clean_resources(&prog_info, prog_info.nb_coders);

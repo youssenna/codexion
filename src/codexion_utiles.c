@@ -29,7 +29,7 @@ void	print_coder_mesage(t_coder *coder, char *status)
 	pthread_mutex_lock(&coder->prog_info->prog_mutex);
 	time = get_curr_t() - coder->prog_info->start_time;
 	if (coder->prog_info->run_sumilation)
-		printf("%lld %d %s\n", time, coder->coder_id, status);
+		printf("[%lld] coder [%d] %s\n", time, coder->coder_id, status);
 	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
 }
 
@@ -41,7 +41,7 @@ void	burnout_message(t_coder *coder)
 	time = get_curr_t() - coder->prog_info->start_time;
 	if (!coder->prog_info->is_burnout)
 	{
-		printf("%lld %d is burnout\n", time, coder->coder_id);
+		printf("[%lld] coder [%d] is burnout\n", time, coder->coder_id);
 		coder->prog_info->is_burnout = 1;
 	}
 	pthread_mutex_unlock(&coder->prog_info->prog_mutex);

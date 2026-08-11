@@ -24,8 +24,8 @@ static int	check_sim_stop(t_coder *coder, t_dongle *d1, t_dongle *d2)
 	if (!coder->prog_info->run_sumilation)
 	{
 		pthread_mutex_unlock(&coder->prog_info->prog_mutex);
-		pthread_mutex_unlock(&d2->mutex);
 		pthread_mutex_unlock(&d1->mutex);
+		pthread_mutex_unlock(&d2->mutex);
 		return (1);
 	}
 	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
@@ -37,8 +37,8 @@ static int	sleep_on_target(t_coder *coder, t_dongle *d1, t_dongle *d2,
 {
 	long long	last;
 
-	pthread_mutex_unlock(&d2->mutex);
 	pthread_mutex_unlock(&d1->mutex);
+	pthread_mutex_unlock(&d2->mutex);
 	pthread_mutex_lock(&target->mutex);
 	if (!sleep_coders(coder, target, &last))
 	{
