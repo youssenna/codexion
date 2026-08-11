@@ -74,13 +74,13 @@ int	sumilation(t_coder *coder, t_dongle *d1, t_dongle *d2)
 		return (0);
 	put_dongle(d1);
 	put_dongle(d2);
-	if (rotine_and_burnout_check(coder, "debug")
-		|| rotine_and_burnout_check(coder, "refactor"))
-		return (0);
 	pthread_mutex_lock(&coder->prog_info->prog_mutex);
 	coder->finished_compile++;
 	if (coder->finished_compile == coder->prog_info->compile_nb)
 		coder->is_finished = 1;
 	pthread_mutex_unlock(&coder->prog_info->prog_mutex);
+	if (rotine_and_burnout_check(coder, "debug")
+		|| rotine_and_burnout_check(coder, "refactor"))
+		return (0);
 	return (1);
 }
