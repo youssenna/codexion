@@ -115,6 +115,8 @@ int	main(int ac, char *av[])
 		fprintf(stderr, "Invalid arguments!\n");
 		return (1);
 	}
+	if (prog_info.nb_coders == 0)
+		return (0);
 	prog_info.start_time = get_curr_t();
 	if (!error_handling(&prog_info))
 		return (0);
